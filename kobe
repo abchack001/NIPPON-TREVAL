@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎌 神戶環球影城親子慶生之旅 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 背景動畫元素 */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        /* 櫻花飄落動畫 */
+        .sakura {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffb7d5 0%, #ff69b4 100%);
+            border-radius: 50% 0 50% 0;
+            animation: fall linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        /* 雲朵飄動 */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            animation: cloudFloat linear infinite;
+        }
+        
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+        }
+        
+        @keyframes cloudFloat {
+            0% {
+                transform: translateX(-200px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px));
+            }
+        }
+        
+        /* 富士山背景 */
+        .fuji-mountain {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-right: 300px solid transparent;
+            border-bottom: 200px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        .fuji-mountain::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: -250px;
+            width: 0;
+            height: 0;
+            border-left: 250px solid transparent;
+            border-right: 250px solid transparent;
+            border-bottom: 150px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 標題區 */
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            padding: 40px 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '🎌';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            left: 20px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .header::after {
+            content: '🗾';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            bottom: -20px;
+            right: 20px;
+            animation: rotate 20s linear infinite reverse;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            font-weight: 900;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            color: #fff5f5;
+            font-size: 1.2em;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 資訊卡片 */
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+            border: 3px solid #ff6b9d;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .info-card h2 {
+            color: #ff6b9d;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h3 {
+            color: #c06c84;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 日程卡片 */
+        .day-card {
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f5 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
+            border: 3px solid #ff6b9d;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
+        }
+        
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            animation: shimmer 3s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .day-card:nth-child(1) { animation-delay: 0.1s; }
+        .day-card:nth-child(2) { animation-delay: 0.2s; }
+        .day-card:nth-child(3) { animation-delay: 0.3s; }
+        .day-card:nth-child(4) { animation-delay: 0.4s; }
+        .day-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        .day-header {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 時間軸 */
+        .timeline-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+            background: linear-gradient(90deg, white 0%, #fff5f5 100%);
+        }
+        
+        .time {
+            font-weight: 700;
+            color: #ff6b9d;
+            min-width: 120px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            flex: 1;
+            color: #333;
+        }
+        
+        .note {
+            color: #c06c84;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-left: 120px;
+            margin-top: 5px;
+        }
+        
+        /* 提示框 */
+        .tip-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe4b3 100%);
+            border-left: 5px solid #ffb347;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tip-box h4 {
+            color: #ff8c00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tip-box ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .tip-box li {
+            margin: 5px 0;
+        }
+        
+        /* 特殊標記 */
+        .birthday-mark {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff1493 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: 10px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 8px 20px rgba(255, 20, 147, 0.6);
+            }
+        }
+        
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+        
+        tr:hover {
+            background: #fff5f5;
+        }
+        
+        /* 按鈕樣式 */
+        .print-btn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.6);
+        }
+        
+        /* 頁尾 */
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            margin-top: 40px;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .day-card {
+                padding: 15px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .time {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .note {
+                margin-left: 0;
+            }
+        }
+        
+        /* 列印樣式 */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .bg-animation,
+            .fuji-mountain,
+            .print-btn {
+                display: none;
+            }
+            
+            .day-card,
+            .info-card {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景動畫 -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- 富士山背景 -->
+    <div class="fuji-mountain"></div>
+    
+    <div class="container">
+        <!-- 標題 -->
+        <div class="header">
+            <h1>🎌 2026年6月 神戶環球影城親子慶生之旅 🎂</h1>
+            <div class="subtitle">⏱️ 5天4夜 | 👨‍👩‍👧 2位大人 + 1位6歲小孩（生日6/13）</div>
+        </div>
+        
+        <!-- 航班資訊 -->
+        <div class="info-card">
+            <h2>✈️ 航班資訊</h2>
+            <table>
+                <tr>
+                    <th>航段</th>
+                    <th>日期</th>
+                    <th>航班</th>
+                    <th>時間</th>
+                </tr>
+                <tr>
+                    <td>🛫 去程</td>
+                    <td>2026/6/11（四）</td>
+                    <td>樂桃 MM032</td>
+                    <td>高雄小港 14:45 → 大阪關西 18:30</td>
+                </tr>
+                <tr>
+                    <td>🛬 回程</td>
+                    <td>2026/6/15（日）</td>
+                    <td>樂桃 MM031</td>
+                    <td>大阪關西 11:05 → 高雄小港 13:50</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 住宿資訊 -->
+        <div class="info-card">
+            <h2>🏨 住宿資訊</h2>
+            <h3>📍 6/11-6/13（3晚）</h3>
+            <p style="padding-left: 20px;">Remm Plus Kobe 神戶三宮</p>
+            <h3>📍 6/14（1晚）</h3>
+            <p style="padding-left: 20px;">Odysis Suites Osaka Airport Hotel</p>
+        </div>
+        
+        <!-- Day 1 -->
+        <div class="day-card">
+            <div class="day-header">📅 Day 1 - 6/11（四）抵達神戶</div>
+            
+            <div class="timeline-item">
+                <div class="time">14:45</div>
+                <div class="activity">🛫 高雄小港機場起飛</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">18:30</div>
+                <div class="activity">🛬 抵達關西機場（日本時間）</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">18:30-19:30</div>
+                <div class="activity">🛃 入境、領行李</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">19:30-20:00</div>
+                <div class="activity">🚶 前往神戶高速船乘船處</div>
+            </div>
+            <div class="note">📍 關西機場第一航廈1F</div>
+            
+            <div class="timeline-item">
+                <div class="time">20:00-20:30</div>
+                <div class="activity">⛴️ 搭乘高速船往神戶機場</div>
+            </div>
+            <div class="note">🚢 神戶-關空Bay Shuttle</div>
+            
+            <div class="timeline-item">
+                <div class="time">20:30-21:00</div>
+                <div class="activity">🚇 神戶機場→三宮站</div>
+            </div>
+            <div class="note">🚈 搭Port Liner</div>
+            
+            <div class="timeline-item">
+                <div class="time">21:00-21:30</div>
+                <div class="activity">🏨 步行至飯店CHECK IN</div>
+            </div>
+            <div class="note">🏢 Remm Plus Kobe</div>
+            
+            <div class="timeline-item">
+                <div class="time">21:30-22:30</div>
+                <div class="activity">🍜 晚餐：すき家Sukiya 三宮店</div>
+            </div>
+            <div class="note">⏰ 24小時營業，適合晚到</div>
+            
+            <div class="timeline-item">
+                <div class="time">22:30~</div>
+                <div class="activity">😴 回飯店休息</div>
+            </div>
+            <div class="note">💤 早點休息準備明天環球影城</div>
+        </div>
+        
+        <!-- Day 2 -->
+        <div class="day-card">
+            <div class="day-header">📅 Day 2 - 6/12（五）大阪環球影城 USJ 🎢</div>
+            
+            <div class="timeline-item">
+                <div class="time">06:30-07:20</div>
+                <div class="activity">🍳 飯店早餐、準備出發</div>
+            </div>
+            <div class="note">👶 記得攜帶嬰兒車</div>
+            
+            <div class="timeline-item">
+                <div class="time">07:40</div>
+                <div class="activity">🚌 三宮巴士站發車</div>
+            </div>
+            <div class="note">🎯 往USJ直達巴士</div>
+            
+            <div class="timeline-item">
+                <div class="time">08:18</div>
+                <div class="activity">🎉 抵達環球影城</div>
+            </div>
+            <div class="note">⚡ 視情況可能提早開園</div>
+            
+            <div class="timeline-item">
+                <div class="time">08:18-08:30</div>
+                <div class="activity">📸 入園準備、拍照</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">08:30-12:30</div>
+                <div class="activity">🎮 上午遊玩</div>
+            </div>
+            <div class="note">🏃 建議先玩熱門設施</div>
+            
+            <div class="timeline-item">
+                <div class="time">12:30-13:30</div>
+                <div class="activity">🍔 午餐</div>
+            </div>
+            <div class="note">🍽️ 園區內餐廳</div>
+            
+            <div class="timeline-item">
+                <div class="time">13:30-18:00</div>
+                <div class="activity">🎡 下午遊玩</div>
+            </div>
+            <div class="note">👶 小孩可在嬰兒車休息</div>
+            
+            <div class="timeline-item">
+                <div class="time">18:00-19:00</div>
+                <div class="activity">🍕 晚餐</div>
+            </div>
+            <div class="note">🍽️ 園區內餐廳</div>
+            
+            <div class="timeline-item">
+                <div class="time">19:00-20:00</div>
+                <div class="activity">🎪 繼續遊玩/購物</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">20:10</div>
+                <div class="activity">🚌 USJ巴士站發車</div>
+            </div>
+            <div class="note">🏠 回三宮</div>
+            
+            <div class="timeline-item">
+                <div class="time">20:50</div>
+                <div class="activity">🏁 抵達三宮巴士站</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">21:00~</div>
+                <div class="activity">😴 回飯店休息</div>
+            </div>
+            
+            <div class="tip-box">
+                <h4>🎯 建議事項</h4>
+                <ul>
+                    <li>💳 建議購買快速通關券（小孩體力有限）</li>
+                    <li>📱 下載USJ官方APP查看即時等候時間</li>
+                    <li>☂️ 攜帶防曬用品、水壺、雨具</li>
+                    <li>👶 嬰兒車可在園區租借或自帶</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Day 3 -->
+        <div class="day-card">
+            <div class="day-header">📅 Day 3 - 6/13（六）姬路城+明石海峽大橋+生田神社 <span class="birthday-mark">🎂 生日快樂！</span></div>
+            
+            <div class="timeline-item">
+                <div class="time">08:00-08:30</div>
+                <div class="activity">🍳 飯店早餐</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">08:45</div>
+                <div class="activity">🚄 三宮站出發</div>
+            </div>
+            <div class="note">🚆 JR神戶線新快速</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:25</div>
+                <div class="activity">🏁 抵達姬路站</div>
+            </div>
+            <div class="note">⏱️ 車程約40分鐘</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:30-09:50</div>
+                <div class="activity">🚶 步行至姬路城</div>
+            </div>
+            <div class="note">📍 約1.5公里，20分鐘</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:50-12:30</div>
+                <div class="activity">🏯 參觀姬路城</div>
+            </div>
+            <div class="note">🎌 天守閣、西之丸庭園</div>
+            
+            <div class="timeline-item">
+                <div class="time">12:30-13:30</div>
+                <div class="activity">🍖 午餐：豚屋豚一 姫路站前店</div>
+            </div>
+            <div class="note">🚶 步行回車站途中</div>
+            
+            <div class="timeline-item">
+                <div class="time">13:45</div>
+                <div class="activity">🚄 姬路站發車</div>
+            </div>
+            <div class="note">🚆 JR神戶線</div>
+            
+            <div class="timeline-item">
+                <div class="time">14:15</div>
+                <div class="activity">🏁 抵達舞子站</div>
+            </div>
+            <div class="note">⏱️ 車程約30分鐘</div>
+            
+            <div class="timeline-item">
+                <div class="time">14:20-15:30</div>
+                <div class="activity">🌉 明石海峽大橋</div>
+            </div>
+            <div class="note">🎫 舞子海上步道（門票¥250）</div>
+            
+            <div class="timeline-item">
+                <div class="time">15:30-15:45</div>
+                <div class="activity">🌳 舞子公園散步</div>
+            </div>
+            <div class="note">📸 可看大橋全景</div>
+            
+            <div class="timeline-item">
+                <div class="time">16:00</div>
+                <div class="activity">🚄 舞子站發車</div>
+            </div>
+            <div class="note">🚆 JR神戶線</div>
+            
+            <div class="timeline-item">
+                <div class="time">16:20</div>
+                <div class="activity">🏁 抵達三宮站</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">16:30-17:30</div>
+                <div class="activity">🥩 晚餐：しゃぶ葉 三宮いくたロード店</div>
+            </div>
+            <div class="note">🍲 壽喜燒吃到飽</div>
+            
+            <div class="timeline-item">
+                <div class="time">17:45-18:30</div>
+                <div class="activity">⛩️ 生田神社散步</div>
+            </div>
+            <div class="note">📍 距離飯店5分鐘</div>
+            
+            <div class="timeline-item">
+                <div class="time">18:30-19:30</div>
+                <div class="activity">🎂 生日慶祝時間</div>
+            </div>
+            <div class="note">🍰 建議買蛋糕回飯店慶生</div>
+            
+            <div class="timeline-item">
+                <div class="time">19:30~</div>
+                <div class="activity">🌃 自由活動</div>
+            </div>
+            <div class="note">✨ 可至神戶港夜景（選擇性）</div>
+            
+            <div class="tip-box">
+                <h4>🎂 生日特別建議</h4>
+                <ul>
+                    <li>🍰 甜點店：Patisserie TOOTH TOOTH、神戶布丁</li>
+                    <li>🎡 晚上選項：神戶港塔、馬賽克廣場摩天輪（夜景）</li>
+                    <li>🎉 在飯店房間唱生日快樂歌</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Day 4 -->
+        <div class="day-card">
+            <div class="day-header">📅 Day 4 - 6/14（日）神戶動物王國→關西機場</div>
+            
+            <div class="timeline-item">
+                <div class="time">08:00-08:30</div>
+                <div class="activity">🍳 飯店早餐、退房</div>
+            </div>
+            <div class="note">🧳 攜帶所有行李</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:00</div>
+                <div class="activity">🚇 三宮站出發</div>
+            </div>
+            <div class="note">🚈 Port Liner</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:20</div>
+                <div class="activity">🦁 抵達神戶動物王國</div>
+            </div>
+            <div class="note">🧳 行李寄放服務台</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:30-13:00</div>
+                <div class="activity">🐨 神戶動物王國遊玩</div>
+            </div>
+            <div class="note">🎪 動物表演、互動體驗</div>
+            
+            <div class="timeline-item">
+                <div class="time">12:00-13:00</div>
+                <div class="activity">🍽️ 午餐</div>
+            </div>
+            <div class="note">🍔 園區內餐廳</div>
+            
+            <div class="timeline-item">
+                <div class="time">13:00-13:15</div>
+                <div class="activity">🧳 領取行李、準備離開</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">13:20</div>
+                <div class="activity">🚇 神戶動物王國站發車</div>
+            </div>
+            <div class="note">🚈 Port Liner</div>
+            
+            <div class="timeline-item">
+                <div class="time">13:30</div>
+                <div class="activity">🏁 抵達神戶機場</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">14:00</div>
+                <div class="activity">⛴️ 搭乘高速船</div>
+            </div>
+            <div class="note">🚢 神戶-關空Bay Shuttle</div>
+            
+            <div class="timeline-item">
+                <div class="time">14:30</div>
+                <div class="activity">🏁 抵達關西機場</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">14:30-15:00</div>
+                <div class="activity">🏨 前往飯店CHECK IN</div>
+            </div>
+            <div class="note">🏢 Odysis Suites Osaka Airport</div>
+            
+            <div class="timeline-item">
+                <div class="time">15:00-15:30</div>
+                <div class="activity">😌 飯店休息、放行李</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">15:30-19:00</div>
+                <div class="activity">🛍️ 臨空城Outlets逛街</div>
+            </div>
+            <div class="note">🏬 Rinku Premium Outlets</div>
+            
+            <div class="timeline-item">
+                <div class="time">19:00-20:00</div>
+                <div class="activity">🛒 TRIAL超市採購</div>
+            </div>
+            <div class="note">🎁 買伴手禮、零食</div>
+            
+            <div class="timeline-item">
+                <div class="time">20:00-21:00</div>
+                <div class="activity">🍜 晚餐</div>
+            </div>
+            <div class="note">🍽️ 臨空城或機場附近餐廳</div>
+            
+            <div class="timeline-item">
+                <div class="time">21:00~</div>
+                <div class="activity">😴 回飯店休息、整理行李</div>
+            </div>
+            <div class="note">📦 準備明天退稅、打包</div>
+            
+            <div class="tip-box">
+                <h4>🛍️ 購物建議</h4>
+                <ul>
+                    <li>👕 Rinku Premium Outlets：GAP、Nike、Le Creuset等</li>
+                    <li>🍜 TRIAL超市：零食、泡麵、藥妝便宜</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Day 5 -->
+        <div class="day-card">
+            <div class="day-header">📅 Day 5 - 6/15（一）關西機場返台</div>
+            
+            <div class="timeline-item">
+                <div class="time">07:00-08:00</div>
+                <div class="activity">🍳 飯店早餐</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">08:00-08:30</div>
+                <div class="activity">🧳 退房、整理行李</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">08:30-09:00</div>
+                <div class="activity">🚶 前往關西機場</div>
+            </div>
+            <div class="note">🚌 飯店接駁或步行</div>
+            
+            <div class="timeline-item">
+                <div class="time">09:00-10:30</div>
+                <div class="activity">✈️ 辦理登機、退稅</div>
+            </div>
+            <div class="note">🎫 樂桃櫃檯Check-in</div>
+            
+            <div class="timeline-item">
+                <div class="time">10:30-11:00</div>
+                <div class="activity">🛍️ 免稅店最後採購</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="time">11:05</div>
+                <div class="activity">🛫 關西機場起飛</div>
+            </div>
+            <div class="note">✈️ 樂桃MM031</div>
+            
+            <div class="timeline-item">
+                <div class="time">13:50</div>
+                <div class="activity">🛬 抵達高雄小港機場</div>
+            </div>
+            <div class="note">🇹🇼 台灣時間</div>
+        </div>
+        
+        <!-- 注意事項 -->
+        <div class="info-card">
+            <h2>⚠️ 注意事項</h2>
+            <div class="tip-box">
+                <h4>🌦️ 天氣</h4>
+                <ul>
+                    <li>六月梅雨季，務必攜帶雨具（折疊傘、雨衣）</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <h4>👶 嬰兒車</h4>
+                <ul>
+                    <li>USJ園區可推嬰兒車，但部分設施需寄放</li>
+                    <li>姬路城天守閣有陡峭樓梯，嬰兒車不便，需背小孩</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <h4>🚇 交通</h4>
+                <ul>
+                    <li>建議購買ICOCA卡（小孩未滿6歲免費）</li>
+                    <li>高速船時刻建議提前確認</li>
+                </ul>
+            </div>
+            
+            <div class="tip-box">
+                <h4>🎒 必備物品清單</h4>
+                <ul>
+                    <li>📄 護照、電子機票</li>
+                    <li>💴 日幣現金、信用卡</li>
+                    <li>☂️ 雨具（折疊傘、雨衣）</li>
+                    <li>🧴 防曬用品、帽子</li>
+                    <li>👶 嬰兒車、背巾</li>
+                    <li>👕 小孩換洗衣物</li>
+                    <li>💊 常備藥品</li>
+                    <li>🔌 充電器、轉接頭</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 列印按鈕 -->
+        <button class="print-btn" onclick="window.print()">🖨️ 列印行程表</button>
+        
+        <!-- 頁尾 -->
+        <div class="footer">
+            🎉 祝您旅途愉快，小朋友生日快樂！🎂
+        </div>
+    </div>
+    
+    <script>
+        // 生成櫻花
+        function createSakura() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const sakuraCount = 30;
+            
+            for (let i = 0; i < sakuraCount; i++) {
+                const sakura = document.createElement('div');
+                sakura.className = 'sakura';
+                sakura.style.left = Math.random() * 100 + '%';
+                sakura.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                sakura.style.animationDelay = Math.random() * 5 + 's';
+                sakura.style.width = (Math.random() * 10 + 15) + 'px';
+                sakura.style.height = sakura.style.width;
+                bgAnimation.appendChild(sakura);
+            }
+        }
+        
+        // 生成雲朵
+        function createClouds() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const cloudCount = 5;
+            
+            for (let i = 0; i < cloudCount; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.top = (Math.random() * 50) + '%';
+                cloud.style.width = (Math.random() * 100 + 100) + 'px';
+                cloud.style.height = (Math.random() * 40 + 40) + 'px';
+                cloud.style.animationDuration = (Math.random() * 30 + 30) + 's';
+                cloud.style.animationDelay = Math.random() * 10 + 's';
+                
+                const beforeSize = Math.random() * 50 + 50;
+                cloud.style.setProperty('--before-width', beforeSize + 'px');
+                cloud.style.setProperty('--before-height', beforeSize + 'px');
+                
+                bgAnimation.appendChild(cloud);
+            }
+        }
+        
+        // 初始化動畫
+        window.addEventListener('load', () => {
+            createSakura();
+            createClouds();
+        });
+        
+        // 平滑滾動效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
