@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北陸7天6夜親子之旅 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 飄落的櫻花動畫 */
+        .sakura {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffb7d5 0%, #ff69b4 100%);
+            border-radius: 50% 0 50% 0;
+            opacity: 0.7;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 飄動的雲朵 */
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+            opacity: 0.8;
+            animation: cloudFloat linear infinite;
+            z-index: 1;
+        }
+        
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+        }
+        
+        .cloud::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+        
+        .cloud::after {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            right: 10px;
+        }
+        
+        @keyframes cloudFloat {
+            0% {
+                transform: translateX(-200px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px));
+            }
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 標題區 */
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe4e9 100%);
+            border-radius: 30px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 5px solid #ff69b4;
+            position: relative;
+            overflow: hidden;
+            animation: headerPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes headerPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+        
+        .header::before {
+            content: '🗾';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            color: #d63384;
+            text-shadow: 3px 3px 0 #fff, 6px 6px 0 #ff69b4;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            color: #c7254e;
+            font-weight: bold;
+        }
+        
+        /* 航班資訊卡片 */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 4px solid #fdcb6e;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card::before {
+            content: '✈️';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            right: -20px;
+            bottom: -20px;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-card h3 {
+            color: #d63384;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 #fff;
+        }
+        
+        .info-card p {
+            color: #2d3436;
+            font-size: 1.1em;
+            margin: 8px 0;
+        }
+        
+        /* 日程卡片 */
+        .day-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border-left: 8px solid;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .day-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+        
+        .day-card:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.25);
+        }
+        
+        .day-card.day-1 { border-left-color: #ff6b6b; }
+        .day-card.day-2 { border-left-color: #4ecdc4; }
+        .day-card.day-3 { border-left-color: #45b7d1; }
+        .day-card.day-4 { border-left-color: #96ceb4; }
+        .day-card.day-5 { border-left-color: #ffeaa7; }
+        .day-card.day-6 { border-left-color: #fd79a8; }
+        .day-card.day-7 { border-left-color: #a29bfe; }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .day-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .day-title {
+            flex: 1;
+        }
+        
+        .day-title h2 {
+            color: #2d3436;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .day-title .hotel {
+            color: #636e72;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+        
+        .schedule {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .schedule.active {
+            max-height: 3000px;
+        }
+        
+        .schedule-item {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .schedule-item:hover {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            transform: translateX(5px);
+        }
+        
+        .time {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 80px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            color: #2d3436;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+        
+        .activity strong {
+            color: #d63384;
+        }
+        
+        /* 小提示框 */
+        .tips {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6cc 100%);
+            border-left: 5px solid #ffa502;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(255, 165, 2, 0.2);
+        }
+        
+        .tips h4 {
+            color: #e17055;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .tips li {
+            color: #2d3436;
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .tips li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .day-number {
+                font-size: 2em;
+            }
+            
+            .day-title h2 {
+                font-size: 1.3em;
+            }
+            
+            .schedule-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        /* 頁腳 */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe4e9 100%);
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer p {
+            color: #d63384;
+            font-size: 1.3em;
+            font-weight: bold;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 櫻花效果 -->
+    <div id="sakura-container"></div>
+    
+    <!-- 雲朵效果 -->
+    <div id="cloud-container"></div>
+    
+    <div class="container">
+        <!-- 標題 -->
+        <div class="header">
+            <h1>🗾 北陸7天6夜親子之旅 🌸</h1>
+            <p>2026年9月24日 - 9月30日</p>
+        </div>
+        
+        <!-- 航班與租車資訊 -->
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>✈️ 去程航班</h3>
+                <p><strong>日期：</strong>9/24 (四)</p>
+                <p><strong>航班：</strong>國泰 CX530</p>
+                <p><strong>時間：</strong>11:30 → 15:30</p>
+                <p><strong>路線：</strong>桃園 → 中部國際機場</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🚗 租車資訊</h3>
+                <p><strong>取車：</strong>9/25 10:00</p>
+                <p><strong>地點：</strong>NIPPON 米原店</p>
+                <p><strong>還車：</strong>9/27 19:00前</p>
+                <p><strong>地點：</strong>NIPPON 金澤西口站</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>✈️ 回程航班</h3>
+                <p><strong>日期：</strong>9/30 (三)</p>
+                <p><strong>航班：</strong>長榮 BR157</p>
+                <p><strong>時間：</strong>11:45 → 13:55</p>
+                <p><strong>路線：</strong>小松 → 桃園機場</p>
+            </div>
+        </div>
+        
+        <!-- Day 1 -->
+        <div class="day-card day-1">
+            <div class="day-header" onclick="toggleSchedule(1)">
+                <div class="day-number">Day 1</div>
+                <div class="day-title">
+                    <h2>9/24 (四) 抵達日</h2>
+                    <div class="hotel">🏨 東橫INN 米原西口站</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-1">
+                <div class="schedule-item">
+                    <div class="time">11:30</div>
+                    <div class="activity">桃園機場出發</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">15:30</div>
+                    <div class="activity">抵達中部國際機場</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">15:30-17:00</div>
+                    <div class="activity">入境、領行李、準備出關</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:00-17:30</div>
+                    <div class="activity">機場4F <strong>えびせんべいの里</strong> 買蝦餅</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:30-18:30</div>
+                    <div class="activity">🍱 <strong>矢場丼豬排機場店</strong> 晚餐</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:45</div>
+                    <div class="activity">搭乘μ-sky往名鐵名古屋站</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">19:15</div>
+                    <div class="activity">抵達名鐵名古屋，轉乘JR往米原</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">20:15</div>
+                    <div class="activity">抵達米原站</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">20:30</div>
+                    <div class="activity">東橫INN CHECK IN、休息</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>第一天以休息為主，不要排太多行程</li>
+                        <li>可在便利商店採購隔天早餐或零食</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 2 -->
+        <div class="day-card day-2">
+            <div class="day-header" onclick="toggleSchedule(2)">
+                <div class="day-number">Day 2</div>
+                <div class="day-title">
+                    <h2>9/25 (五) 租車首日・彥根・長濱</h2>
+                    <div class="hotel">🏨 Route Inn Takefu Inter Hotel</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-2">
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">飯店早餐、退房</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:30</div>
+                    <div class="activity">步行至NIPPON RENT A CAR 米原店</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">10:00</div>
+                    <div class="activity">🚗 取車、確認車況、安裝兒童座椅</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">10:20</div>
+                    <div class="activity">開車前往彥根城（車程約15分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">10:40-12:30</div>
+                    <div class="activity">🏯 <strong>彥根城</strong> 遊覽（天守閣、玄宮園、彥根喵合照）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">12:30-13:45</div>
+                    <div class="activity">🍱 <strong>比内地鶏夢京橋店</strong> 午餐</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">14:00-14:40</div>
+                    <div class="activity">開車前往長濱市（車程約40分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">14:40-17:00</div>
+                    <div class="activity">✨ <strong>長濱市黑壁廣場</strong> 散策、逛玻璃工藝品店</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:15-18:15</div>
+                    <div class="activity">開車前往武生（車程約1小時）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:15-19:15</div>
+                    <div class="activity">🍜 <strong>越前そばの里</strong> 晚餐 + 參觀（蕎麥麵工廠見學）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">19:30</div>
+                    <div class="activity">Route Inn Takefu Inter CHECK IN</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">20:00-21:00</div>
+                    <div class="activity">🛒 <strong>Seria 武生楽市店</strong> 採購物品</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>關原之戰紀念館視時間彈性調整（若要去，安排在彥根城之後，約需1小時）</li>
+                        <li>黑壁廣場有很多玻璃工藝品，小朋友可體驗玻璃珠DIY</li>
+                        <li>越前そばの里有蕎麥麵製作體驗（需預約）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 3 -->
+        <div class="day-card day-3">
+            <div class="day-header" onclick="toggleSchedule(3)">
+                <div class="day-number">Day 3</div>
+                <div class="day-title">
+                    <h2>9/26 (六) 大野・恐龍博物館</h2>
+                    <div class="hotel">🏨 コンフォートイン福井</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-3">
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">飯店早餐、退房</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:00-09:40</div>
+                    <div class="activity">開車前往大野市（車程約40分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:40-10:00</div>
+                    <div class="activity">🍡 <strong>四季の餅 あめこ</strong> 買伴手禮</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">10:00-11:30</div>
+                    <div class="activity">🏯 <strong>越前大野城</strong> 遊覽（天空之城，需登山步道約20分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">11:40-13:00</div>
+                    <div class="activity">🍱 <strong>古民家レストラン 茶屋 おがまち</strong> 午餐</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">13:10-13:50</div>
+                    <div class="activity">開車前往福井恐龍博物館（車程約40分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">14:00-17:00</div>
+                    <div class="activity">🦕 <strong>福井縣立恐龍博物館</strong> 遊覽（建議預約門票）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:10-18:00</div>
+                    <div class="activity">開車前往福井市區（車程約50分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:00-19:00</div>
+                    <div class="activity">🍲 <strong>しゃぶ葉 福井大和田店</strong> 晚餐（吃到飽涮涮鍋）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">19:15</div>
+                    <div class="activity">コンフォートイン福井 CHECK IN</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">20:00-21:00</div>
+                    <div class="activity">🛒 <strong>ドン・キホーテ 福井大和田店</strong> 採購物品</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>恐龍博物館是小朋友最愛，建議預留3小時以上</li>
+                        <li>越前大野城如遇雨天，登城步道會較濕滑，請注意安全</li>
+                        <li>恐龍博物館建議事先網路預約，避免現場排隊</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 4 -->
+        <div class="day-card day-4">
+            <div class="day-header" onclick="toggleSchedule(4)">
+                <div class="day-number">Day 4</div>
+                <div class="day-title">
+                    <h2>9/27 (日) 丸岡・東尋坊・動物園・還車</h2>
+                    <div class="hotel">🏨 金沢マンテンホテル駅前</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-4">
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">飯店早餐、退房</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:00-09:30</div>
+                    <div class="activity">開車前往丸岡城（車程約30分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:30-11:00</div>
+                    <div class="activity">🏯 <strong>丸岡城</strong> 遊覽（日本最古老天守閣）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">11:10-11:40</div>
+                    <div class="activity">開車前往東尋坊（車程約30分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">11:40-12:00</div>
+                    <div class="activity">♨️ <strong>蘆湯</strong> 泡足湯、放鬆</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">12:00-13:15</div>
+                    <div class="activity">🍱 <strong>東尋坊</strong> 周邊午餐（推薦：やまに水產海鮮丼）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">13:15-14:30</div>
+                    <div class="activity">🌊 東尋坊散步、看斷崖絕壁、搭觀光船（自由選擇）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">14:40-15:30</div>
+                    <div class="activity">開車前往石川動物園（車程約50分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">15:30-17:00</div>
+                    <div class="activity">🐼 <strong>いしかわ動物園</strong> 遊玩（小動物觸摸區、餵食秀）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:10-17:50</div>
+                    <div class="activity">開車前往金澤站（車程約40分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:00</div>
+                    <div class="activity">🚗 NIPPON RENT A CAR 金澤西口站 還車</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:30</div>
+                    <div class="activity">步行至金沢マンテンホテル駅前 CHECK IN</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">19:00-20:00</div>
+                    <div class="activity">🍱 金澤站周邊晚餐（推薦：金澤百番街、FORUS）</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>東尋坊懸崖邊請特別注意小朋友安全</li>
+                        <li>動物園17:00閉園，建議15:30前入園</li>
+                        <li>還車前記得加滿油，確認車況</li>
+                        <li>如時間緊迫，可省略蘆湯或縮短東尋坊停留時間</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 5 -->
+        <div class="day-card day-5">
+            <div class="day-header" onclick="toggleSchedule(5)">
+                <div class="day-number">Day 5</div>
+                <div class="day-title">
+                    <h2>9/28 (一) 金澤東側・市場與茶屋街</h2>
+                    <div class="hotel">🏨 金沢マンテンホテル駅前</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-5">
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">飯店早餐</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:30-11:30</div>
+                    <div class="activity">🦀 <strong>近江町市場</strong> 逛市場、早午餐（推薦：山さん寿司 或 井ノ弥海鮮丼）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">11:30-12:00</div>
+                    <div class="activity">從近江町市場步行至東茶屋街（約15分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">12:00-15:00</div>
+                    <div class="activity">🏮 <strong>東茶屋街</strong> 散策<br>
+                        ・茶屋建築街道散步拍照<br>
+                        ・參觀志摩茶屋或懷華樓<br>
+                        ・逛金箔專賣店：箔一、今井金箔<br>
+                        ・品嚐金箔冰淇淋、金箔咖啡
+                    </div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">15:00-15:30</div>
+                    <div class="activity">從東茶屋街搭巴士至尾山神社</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">15:30-16:30</div>
+                    <div class="activity">⛩️ <strong>尾山神社</strong> 參拜（彩色玻璃神門）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">16:30-17:00</div>
+                    <div class="activity">從尾山神社步行至長町武家屋敷跡（約10分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:00-18:00</div>
+                    <div class="activity">🏛️ <strong>長町武家屋敷跡</strong> 散策（江戶時代武士住宅街）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:00-18:30</div>
+                    <div class="activity">搭巴士或步行返回金澤站（約15分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:30-20:00</div>
+                    <div class="activity">🥩 晚餐：<strong>金澤肉食堂 百番街店</strong>（金澤和牛燒肉、能登豬料理）</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>近江町市場建議一早去，魚販最新鮮、遊客較少</li>
+                        <li>東茶屋街可以慢慢逛，有很多特色小店</li>
+                        <li>長町武家屋敷如時間不夠可省略，保留體力給明天</li>
+                        <li>建議購買「金澤巴士一日券」600日圓</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 6 -->
+        <div class="day-card day-6">
+            <div class="day-header" onclick="toggleSchedule(6)">
+                <div class="day-number">Day 6</div>
+                <div class="day-title">
+                    <h2>9/29 (二) 金澤西側・兼六園與美術館</h2>
+                    <div class="hotel">🏨 金沢マンテンホテル駅前</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-6">
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">飯店早餐</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:30-10:00</div>
+                    <div class="activity">從金澤站搭巴士至兼六園</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">10:00-12:00</div>
+                    <div class="activity">🌳 <strong>兼六園</strong> 散策（日本三名園之一）<br>
+                        ・徽軫燈籠、霞池、雁行橋<br>
+                        ・唐崎松、瓢池<br>
+                        ・時雨亭品抹茶（可選）
+                    </div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">12:00-12:15</div>
+                    <div class="activity">從兼六園步行至金澤城公園（約5分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">12:15-13:15</div>
+                    <div class="activity">🏯 <strong>金澤城跡</strong> 散步（石川門、五十間長屋、菱櫓）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">13:15-13:20</div>
+                    <div class="activity">從金澤城步行至21世紀美術館（約5分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">13:20-14:30</div>
+                    <div class="activity">🍱 美術館周邊午餐<br>
+                        ・推薦：<strong>自由軒</strong>（金澤洋食老舖，蛋包飯、炸豬排）<br>
+                        ・或 <strong>Fusion21</strong>（美術館內咖啡廳）
+                    </div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">14:30-17:00</div>
+                    <div class="activity">🎨 <strong>金澤21世紀美術館</strong> 參觀<br>
+                        ・必看：林德羅·厄利什《游泳池》<br>
+                        ・SANAA建築設計的圓形美術館<br>
+                        ・戶外免費展區、互動藝術裝置
+                    </div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:00-17:05</div>
+                    <div class="activity">從美術館步行至石浦神社（約5分鐘）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:05-17:45</div>
+                    <div class="activity">⛩️ <strong>石浦神社</strong> 參拜（超可愛的彩色御守、繽紛繪馬）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">17:45-18:30</div>
+                    <div class="activity">搭巴士返回金澤站</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">18:30-19:30</div>
+                    <div class="activity">🍛 晚餐：<strong>Go Go Curry 金沢駅総本山</strong>（金澤知名咖哩飯）</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">19:30-21:00</div>
+                    <div class="activity">🎁 金澤站補貨、買伴手禮（金澤百番街、FORUS）</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>兼六園→金澤城→21世紀美術館→石浦神社 全程步行可達（各景點間5-10分鐘）</li>
+                        <li>21世紀美術館週一閉館，週二正常開放（10:00-18:00）</li>
+                        <li>這一區景點超集中，是金澤精華區</li>
+                        <li>巴士一日券主要用於往返金澤站</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 7 -->
+        <div class="day-card day-7">
+            <div class="day-header" onclick="toggleSchedule(7)">
+                <div class="day-number">Day 7</div>
+                <div class="day-title">
+                    <h2>9/30 (三) 返台日</h2>
+                    <div class="hotel">✈️ 回家囉！</div>
+                </div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="schedule" id="schedule-7">
+                <div class="schedule-item">
+                    <div class="time">07:30</div>
+                    <div class="activity">飯店早餐、退房</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">08:30</div>
+                    <div class="activity">🚌 金澤站西口搭乘機場巴士</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:20</div>
+                    <div class="activity">抵達小松機場</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">09:20-11:15</div>
+                    <div class="activity">辦理登機手續、逛免稅店、候機</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">11:45</div>
+                    <div class="activity">✈️ 小松機場起飛</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">13:55</div>
+                    <div class="activity">🏠 抵達桃園機場，返回溫暖的家</div>
+                </div>
+                <div class="tips">
+                    <h4>💡 貼心提醒</h4>
+                    <ul>
+                        <li>巴士班次不多，務必提前確認時刻表</li>
+                        <li>小松機場較小，提前1.5小時到即可</li>
+                        <li>記得保留一些日幣，機場可能會想買最後伴手禮</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 頁腳 -->
+        <div class="footer">
+            <p>🌸 祝您們全家北陸之旅玩得開心！🎌✨</p>
+        </div>
+    </div>
+    
+    <script>
+        // 切換行程顯示
+        function toggleSchedule(day) {
+            const schedule = document.getElementById(`schedule-${day}`);
+            const btn = schedule.previousElementSibling.querySelector('.toggle-btn');
+            
+            schedule.classList.toggle('active');
+            btn.textContent = schedule.classList.contains('active') ? '−' : '+';
+        }
+        
+        // 生成櫻花
+        function createSakura() {
+            const container = document.getElementById('sakura-container');
+            for (let i = 0; i < 20; i++) {
+                const sakura = document.createElement('div');
+                sakura.className = 'sakura';
+                sakura.style.left = Math.random() * 100 + '%';
+                sakura.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                sakura.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(sakura);
+            }
+        }
+        
+        // 生成雲朵
+        function createClouds() {
+            const container = document.getElementById('cloud-container');
+            for (let i = 0; i < 5; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.width = (Math.random() * 100 + 100) + 'px';
+                cloud.style.height = (Math.random() * 30 + 40) + 'px';
+                cloud.style.top = Math.random() * 50 + '%';
+                cloud.style.animationDuration = (Math.random() * 20 + 30) + 's';
+                cloud.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(cloud);
+            }
+        }
+        
+        // 初始化
+        window.addEventListener('load', () => {
+            createSakura();
+            createClouds();
+        });
+    </script>
+</body>
+</html>
